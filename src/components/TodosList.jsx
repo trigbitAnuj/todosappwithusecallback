@@ -3,8 +3,16 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { AiFillDelete } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 
-function TodosList({ todos,completedTodos, onDeleteTodo, onChangeTodo }) {
- 
+function TodosList({ todos,completedTodos,setCompletedTodos, onDeleteTodo, onChangeTodo }) {
+  console.log("todolist")
+  
+
+  const onChangeCompletedTodos=(id)=>{
+    setCompletedTodos(completedTodos.map((todo)=>todo.id===id ? {...todo,isDone:!todo.isDone}:todo))
+  }
+  const onDeleteCompletedTodos=(id)=>{
+    setCompletedTodos((todos)=>todos.filter((todo)=>todo.id!==id)); 
+  }
 
   return (
     <section className=" flex  w-full mt-4 justify-between gap-2">
@@ -58,8 +66,8 @@ function TodosList({ todos,completedTodos, onDeleteTodo, onChangeTodo }) {
                 key={todo.id}
                   index={index}
                   todo={todo}
-                  onChangeTodo={onChangeTodo}
-                  onDeleteTodo={onDeleteTodo}
+                  onChangeTodo={onChangeCompletedTodos}
+                  onDeleteTodo={onDeleteCompletedTodos}
                 />
              
             ))}
