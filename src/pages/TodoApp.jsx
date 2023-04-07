@@ -1,40 +1,59 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import TodosList from "../components/TodosList";
 import AddTodo from "../components/AddTodo";
 import { DragDropContext } from "react-beautiful-dnd";
+import { reducer } from "../components/reducer";
+
+
+
 
 let nextId=1;
 const initialTodos=[]
   
   function TodoApp() {
     // const [count, setCount] = useState(0);
-    const [todos, setTodos] = useState(initialTodos);
-    const [completedTodos,setcompletedTodos]=useState([])
-    console.log("parent Component")
-    console.log(todos);
-    console.log(completedTodos)
+    // const [todos, setTodos] = useState(initialTodos);
+    const [completedTodos,setcompletedTodos]=useState([]);
+
+    const [todos, dispatch] = useReducer(reducer, initialTodos, )
+
+
+
+   
   
-  // const increment=useCallback(()=>{
-  //   console.log("count button Clicked")
-  //   setCount(count+1)
-  // },[count])
 
 
   
   const onAddTodo=(text)=>{
     console.log("add todo button clicked")
-    setTodos((todos)=>[...todos,{id:nextId++,text:text,isDone:false}])
+   dispatch({
+    type:"add",
+    text:text,
+    id:nextId++
+
+   })
   }
 
 
 const onDeleteTodo=(id)=>{
   console.log("delete function run")
-  setTodos((todos)=>todos.filter((todo)=>todo.id!==id)); 
+  dispatch({
+    type:"remove",
+    todoId:id
+  })
+  // 
+  
 }
 
 const onChangeTodo=(id)=>{
   console.log("onchange run")
-   setTodos(todos.map((todo)=>todo.id===id ? {...todo,isDone:!todo.isDone}:todo))
+  dispatch({
+    type:"change",
+    changeId:id,
+
+    
+  })
+  
 }
 
 const onDragEnd=(result)=>{
@@ -74,8 +93,8 @@ const {source,destination}=result;
  
    }
    
-   setTodos(active)
-   setcompletedTodos(complete)
+   
+   
    
 
 
@@ -91,7 +110,7 @@ const {source,destination}=result;
         <h1 className="text-center text-4xl font-bold my-8">Todos</h1>
        {/* <Count count={count} increment={increment}/> */}
           <AddTodo onAddTodo={onAddTodo}/>
-        <TodosList todos={todos} onDeleteTodo={onDeleteTodo} onChangeTodo={onChangeTodo} completedTodos={completedTodos}/>
+        <TodosList todos={todos} onDeleteTodo={onDeleteTodo} onChangeTodo={onChangeTodo} completedTodos={completedTodos} setCompletedTodos={setcompletedTodos}/>
   
       </section>
       </DragDropContext>
