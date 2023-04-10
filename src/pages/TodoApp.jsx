@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from "react";
+import {  useReducer, useState } from "react";
 import TodosList from "../components/TodosList";
 import AddTodo from "../components/AddTodo";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -7,7 +7,7 @@ import { reducer } from "../components/reducer";
 
 
 
-let nextId=1;
+
 const initialTodos=[]
   
   function TodoApp() {
@@ -17,44 +17,46 @@ const initialTodos=[]
 
     const [todos, dispatch] = useReducer(reducer, initialTodos, )
 
+  // const onAddTodo=(text)=>{
+  //   console.log("add todo button clicked")
+  //  dispatch({
+  //   type:"add",
+  //   payload:{
+  //     text:text,
+  //   id:nextId++
+  //   }
+    
+
+  //  })
+  // }
 
 
+// const onDeleteTodo=(id)=>{
+//   console.log("delete function run")
+//   dispatch({
+//     type:"remove",
+//     payload:{
+//       todoId:id
+//     }
    
+//   })
   
-
-
   
-  const onAddTodo=(text)=>{
-    console.log("add todo button clicked")
-   dispatch({
-    type:"add",
-    text:text,
-    id:nextId++
+// }
 
-   })
-  }
-
-
-const onDeleteTodo=(id)=>{
-  console.log("delete function run")
-  dispatch({
-    type:"remove",
-    todoId:id
-  })
-  // 
-  
-}
-
-const onChangeTodo=(id)=>{
-  console.log("onchange run")
-  dispatch({
-    type:"change",
-    changeId:id,
+// const onChangeTodo=(id)=>{
+//   console.log("onchange run")
+//   dispatch({
+//     type:"change",
+//     payload:{
+//       changeId:id,
+//     }
+    
 
     
-  })
+//   // })
   
-}
+// }
 
 const onDragEnd=(result)=>{
 const {source,destination}=result;
@@ -109,8 +111,8 @@ const {source,destination}=result;
     <section className="m-4 p-2">
         <h1 className="text-center text-4xl font-bold my-8">Todos</h1>
        {/* <Count count={count} increment={increment}/> */}
-          <AddTodo onAddTodo={onAddTodo}/>
-        <TodosList todos={todos} onDeleteTodo={onDeleteTodo} onChangeTodo={onChangeTodo} completedTodos={completedTodos} setCompletedTodos={setcompletedTodos}/>
+          <AddTodo  dispatch={dispatch}/>
+        <TodosList todos={todos} dispatch={dispatch} completedTodos={completedTodos} setCompletedTodos={setcompletedTodos}/>
   
       </section>
       </DragDropContext>
