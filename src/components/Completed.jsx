@@ -3,8 +3,7 @@ import { MdDone } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 
 const Completed = ({ index, todo, deleteCompletedTodos }) => {
-  console.log("completed component rendered");
-
+  
   return (
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided) => (
