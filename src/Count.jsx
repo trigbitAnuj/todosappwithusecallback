@@ -1,6 +1,6 @@
 import React from "react";
 
-function Count({ count, increment }) {
+const Count=({ count, increment })=> {
   React.useEffect(() => {
     console.log("count component render");
   });
