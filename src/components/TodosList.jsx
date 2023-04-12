@@ -1,20 +1,19 @@
 import React, { memo } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { AiFillDelete } from "react-icons/ai";
-import { MdDone } from "react-icons/md";
+import { Droppable } from "react-beautiful-dnd";
+
 import SingleTodo from "./SingleTodo";
+import Completed from "./Completed";
 
-function TodosList({ todos, dispatch, completedTodos, setCompletedTodos }) {
-  console.log("todolist");
-
-  const onChangeCompletedTodos = (id) => {
+const TodosList = ({ todos, dispatch, completedTodos, setCompletedTodos }) => {
+  console.log("todo list rendered");
+  const changeCompletedTodos = (id) => {
     setCompletedTodos(
       completedTodos.map((todo) =>
         todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
       )
     );
   };
-  const onDeleteCompletedTodos = (id) => {
+  const deleteCompletedTodos = (id) => {
     setCompletedTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
 
@@ -32,9 +31,6 @@ function TodosList({ todos, dispatch, completedTodos, setCompletedTodos }) {
             </h1>
 
             {todos.map((todo, index) => (
-              //  <li key={todo.id}>
-              //    <div>{todo.text}</div>
-              //  </li>
               <SingleTodo
                 key={todo.id}
                 index={index}
@@ -60,8 +56,13 @@ function TodosList({ todos, dispatch, completedTodos, setCompletedTodos }) {
             </h1>
 
             {completedTodos.map((todo, index) => (
-              //  <li key={todo.id}>{todo.id}</li>
-              <Completed key={todo.id} index={index} todo={todo} onChangeCompletedTodos={onChangeCompletedTodos} onDeleteCompletedTodos={onDeleteCompletedTodos} />
+              <Completed
+                key={todo.id}
+                index={index}
+                todo={todo}
+                changeCompletedTodos={changeCompletedTodos}
+                deleteCompletedTodos={deleteCompletedTodos}
+              />
             ))}
             {provided.placeholder}
           </section>
@@ -69,50 +70,6 @@ function TodosList({ todos, dispatch, completedTodos, setCompletedTodos }) {
       </Droppable>
     </section>
   );
-}
+};
 
 export default memo(TodosList);
-
-
-
-function Completed ({index,todo, onChangeCompletedTodos,onDeleteCompletedTodos}){
-  
-  return (
-    <Draggable draggableId={todo.id.toString()} index={index}>
-      {(provided) => (
-        <div
-          className="flex rounded-md  justify-between  mt-3  p-[15px] bg-gray-400 hover:scale-[1.01]"
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-        >
-          {todo.isDone ? (
-            <s className="text-2xl font-light">{todo.text}</s>
-          ) : (
-            <span className="text-2xl">{todo.text}</span>
-          )}
-
-          <section className="flex ">
-            <button
-              className="cursor-pointer ml-3 text-xl"
-              onClick={() =>onDeleteCompletedTodos(todo.id)
-                
-              }
-            >
-              <AiFillDelete />
-            </button>
-            <button
-              className="cursor-pointer ml-3 text-xl"
-              onClick={() =>onChangeCompletedTodos(todo.id)
-               
-              }
-            >
-              <MdDone />
-            </button>
-          </section>
-        </div>
-      )}
-    </Draggable>
-  );
-
-}
