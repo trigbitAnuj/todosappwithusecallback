@@ -5,7 +5,7 @@ import SingleTodo from "./SingleTodo";
 import Completed from "./Completed";
 
 const TodosList = ({ todos, dispatch, completedTodos, setCompletedTodos }) => {
-  console.log("todo list rendered");
+  
   const changeCompletedTodos = (id) => {
     setCompletedTodos(
       completedTodos.map((todo) =>
