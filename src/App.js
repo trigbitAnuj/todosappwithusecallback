@@ -1,21 +1,12 @@
+import TodoApp from "./pages/TodoApp";
+import "./App.css";
 
-import TodoApp from './pages/TodoApp';
-import './App.css';
-
-
-
-
-function App() {
-
+const App = () => {
   return (
     <div>
-     
       <TodoApp />
-
-
     </div>
-    
   );
-}
+};
 
 export default App;
